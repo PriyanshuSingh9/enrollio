@@ -374,37 +374,40 @@ POST   /api/users/upload-resume   → Upload resume file (multipart/form-data)
 ## 7. UI/UX Guidelines
 
 ### Visual Style
-Enrollio's color palette is directly inspired by **lu.ma** — minimal, sophisticated, and modern. Luma uses a dark gray foundation with soft blue accents, creating a clean and trustworthy event-platform aesthetic.
+Enrollio features a premium **dark mode** aesthetic, inspired by modern developer-focused platforms like Vercel and Linear. The design uses deep black backgrounds with subtle gray surfaces and vibrant violet/purple accents for a high-contrast, immersive experience.
 
-| Role | Name | Hex | Usage |
+| Role | Name | Hex / Value | Usage |
 |---|---|---|---|
-| **Base / Text** | Shark | `#333537` | Primary text, nav background, dark UI surfaces |
-| **Primary Accent** | Shakespeare | `#53ADD2` | Buttons, links, active states, highlights |
-| **Light Accent** | Anakiwa | `#A9C9FF` | Hover states, badges, soft highlights, stepper active |
-| **Background** | Off-White | `#F9F9F9` | Page background |
-| **Surface** | White | `#FFFFFF` | Cards, modals, form containers |
-| **Border** | Light Gray | `#E5E7EB` | Dividers, input borders, card outlines |
-| **Muted Text** | Cool Gray | `#6B7280` | Subtitles, placeholders, secondary labels |
-| **Success** | Sage Green | `#4CAF7D` | Accepted status, completion states |
-| **Warning** | Warm Amber | `#F4A942` | Pending status, deadline near |
-| **Error** | Soft Red | `#E05C5C` | Rejected status, form errors |
+| **Background** | Obsidian | `#0a0a0a` | Main page background |
+| **Surface** | Charcoal | `#111111` | Cards, modals, form containers |
+| **Surface Hover** | Onyx | `#1a1a1a` | Hover state for interactive cards |
+| **Primary Text** | White | `#ffffff` | Headings, primary labels |
+| **Secondary Text** | Mist | `#a1a1a1` | Body text, descriptions |
+| **Muted Text** | Ash | `#666666` | Placeholders, meta info |
+| **Accent** | Violet | `#8b5cf6` | Primary buttons, links, active states, glow effects |
+| **Accent Hover** | Lavender | `#a78bfa` | Hover state for accent elements |
+| **Border** | Subtle | `rgba(255, 255, 255, 0.06)` | Card dividers, inputs |
+| **Success** | Emerald | `#22c55e` | Completion, success states |
+| **Warning** | Amber | `#f59e0b` | Pending, alerts |
 
-**Design language notes:**
-- Dark mode friendly — Shark `#333537` works as a surface color in dark contexts
-- Avoid pure black (`#000000`) — use Shark for all "dark" needs
-- Gradients: subtle `#A9C9FF → #53ADD2` allowed on hero sections and certificate banners
-- All interactive elements use Shakespeare `#53ADD2` as the primary action color
+**Design Language:**
+- **Dark Default:** The interface is dark-only. No light mode.
+- **Glassmorphism:** Subtle glass effects on navbars and overlays (`backdrop-blur`).
+- **Glow Effects:** Critical actions and hero elements use a soft violet glow (`box-shadow` or radial gradients).
+- **Minimal Borders:** Cards rely on background contrast (`#111` on `#0a0`) and very subtle borders (`opacity 0.06`) rather than heavy outlines.
 
 **Typography & Components:**
-- **Font:** Inter (same as Luma — clean, geometric, highly legible)
-- **Radius:** `rounded-xl` for cards, `rounded-full` for badges and buttons
-- **Shadows:** Subtle `shadow-sm` on cards (Luma keeps shadows very light), stronger `shadow-lg` on modals
-- **Borders:** Prefer `border border-[#E5E7EB]` over heavy shadows for card separation
-- All cards must show: banner image, title, organizer name, deadline badge, mode tag
-- Status badges are colored pills — never plain text
-- Empty states must have an illustration + CTA (never just "No results")
-- Loading states use skeleton screens — never spinners alone
-- All forms use inline validation (show error immediately on blur)
+- **Font:** **Geist Sans** (modern, geometric sans-serif) and **Geist Mono** (for code/IDs).
+- **Radius:** Standardized border radius system:
+    - `sm` (8px): Inner elements, tags
+    - `md` (12px): Inputs, buttons
+    - `lg` (16px): Cards, containers
+    - `full` (9999px): Pills, status badges, avatars
+- **Interactive Elements:**
+    - Buttons have a subtle hover lift (`translate-y-[-2px]`) and glow.
+    - Inputs use `bg-surface` (`#111`) with `text-primary`.
+- **Loading:** Skeleton screens only. No spinners unless absolutely necessary.
+- **Forms:** Inline validation. Dark inputs with light text.
 
 ### Responsive Breakpoints
 - Mobile: single column, bottom nav
