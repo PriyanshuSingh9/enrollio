@@ -63,7 +63,7 @@ One platform. Full pipeline. Zero manual grunt work. When a participant complete
 |---|---|
 | **Clerk** | Fully managed auth — sign up, sign in, sessions, user management, role-based access via `publicMetadata` |
 
-Clerk replaces all manual auth logic. No JWT handling, no bcrypt, no session management needed. Clerk's `middleware.ts` protects routes, and `auth()` / `currentUser()` are used in Server Components and API Routes.
+Clerk replaces all manual auth logic. No JWT handling, no bcrypt, no session management needed. Clerk's `middleware.js` protects routes, and `auth()` / `currentUser()` are used in Server Components and API Routes.
 
 **Role setup with Clerk:**
 - On registration, users are assigned `role: "user"` in Clerk `publicMetadata`
@@ -132,33 +132,33 @@ Landing Page
 Next.js uses file-based routing. All routes live inside `/app/`. Protected routes are handled by Clerk middleware.
 
 ```
-/                              → Landing Page          (app/page.tsx)
-/sign-in                       → Clerk Sign In         (app/sign-in/page.tsx)
-/sign-up                       → Clerk Sign Up         (app/sign-up/page.tsx)
+/                              → Landing Page          (app/page.js)
+/sign-in                       → Clerk Sign In         (app/sign-in/page.js)
+/sign-up                       → Clerk Sign Up         (app/sign-up/page.js)
 
-/admin                         → Admin Dashboard       (app/admin/page.tsx)
-/admin/events/new              → Create Event          (app/admin/events/new/page.tsx)
-/admin/events/[id]             → Manage Event          (app/admin/events/[id]/page.tsx)
-/admin/internships/new         → Create Internship     (app/admin/internships/new/page.tsx)
-/admin/internships/[id]        → Manage Internship     (app/admin/internships/[id]/page.tsx)
+/admin                         → Admin Dashboard       (app/admin/page.js)
+/admin/events/new              → Create Event          (app/admin/events/new/page.js)
+/admin/events/[id]             → Manage Event          (app/admin/events/[id]/page.js)
+/admin/internships/new         → Create Internship     (app/admin/internships/new/page.js)
+/admin/internships/[id]        → Manage Internship     (app/admin/internships/[id]/page.js)
 
-/home                          → User Homepage         (app/home/page.tsx)
-/events                        → Events Listing        (app/events/page.tsx)
-/events/[id]                   → Event Detail          (app/events/[id]/page.tsx)
-/events/[id]/enroll            → Enrollment Stepper    (app/events/[id]/enroll/page.tsx)
-/internships                   → Internships Listing   (app/internships/page.tsx)
-/internships/[id]              → Internship Detail     (app/internships/[id]/page.tsx)
-/internships/[id]/enroll       → Enrollment Stepper    (app/internships/[id]/enroll/page.tsx)
+/home                          → User Homepage         (app/home/page.js)
+/events                        → Events Listing        (app/events/page.js)
+/events/[id]                   → Event Detail          (app/events/[id]/page.js)
+/events/[id]/enroll            → Enrollment Stepper    (app/events/[id]/enroll/page.js)
+/internships                   → Internships Listing   (app/internships/page.js)
+/internships/[id]              → Internship Detail     (app/internships/[id]/page.js)
+/internships/[id]/enroll       → Enrollment Stepper    (app/internships/[id]/enroll/page.js)
 
-/dashboard                     → User Dashboard        (app/dashboard/page.tsx)
-/dashboard/profile             → Profile Settings      (app/dashboard/profile/page.tsx)
-/dashboard/activity            → My Activity           (app/dashboard/activity/page.tsx)
+/dashboard                     → User Dashboard        (app/dashboard/page.js)
+/dashboard/profile             → Profile Settings      (app/dashboard/profile/page.js)
+/dashboard/activity            → My Activity           (app/dashboard/activity/page.js)
 
-/verify/[certId]               → Certificate Verify    (app/verify/[certId]/page.tsx)
+/verify/[certId]               → Certificate Verify    (app/verify/[certId]/page.js)
 
-/api/programs                  → API Route             (app/api/programs/route.ts)
-/api/programs/[id]             → API Route             (app/api/programs/[id]/route.ts)
-/api/applications/[id]/status  → API Route             (app/api/applications/[id]/status/route.ts)
+/api/programs                  → API Route             (app/api/programs/route.js)
+/api/programs/[id]             → API Route             (app/api/programs/[id]/route.js)
+/api/applications/[id]/status  → API Route             (app/api/applications/[id]/status/route.js)
 ... (all API routes follow same pattern)
 ```
 
@@ -177,7 +177,7 @@ Next.js uses file-based routing. All routes live inside `/app/`. Protected route
 - Clerk handles all sign-up, sign-in, session management, and user profile out of the box
 - `/sign-in` and `/sign-up` use Clerk's hosted or embedded components (`<SignIn />`, `<SignUp />`)
 - Role-based access controlled via Clerk `publicMetadata.role` — values: `"user"` or `"admin"`
-- `middleware.ts` at the root uses Clerk's `authMiddleware` to protect all routes under `/admin/*`, `/dashboard/*`, `/events/*/enroll`, and `/internships/*/enroll`
+- `middleware.js` at the root uses Clerk's `authMiddleware` to protect all routes under `/admin/*`, `/dashboard/*`, `/events/*/enroll`, and `/internships/*/enroll`
 - Admin role is assigned via Clerk Dashboard or a one-time setup API call — not self-selected by users
 - `auth()` used in Server Components; `useAuth()` / `useUser()` used in Client Components
 - No "Change Password" in our app — handled natively by Clerk's user profile
@@ -316,7 +316,7 @@ Next.js uses file-based routing. All routes live inside `/app/`. Protected route
 
 ## 6. API Endpoints
 
-All API routes live in `/app/api/` and follow Next.js App Router conventions using `route.ts` files. Authentication is verified server-side using Clerk's `auth()` helper. No separate Express server needed.
+All API routes live in `/app/api/` and follow Next.js App Router conventions using `route.js` files. Authentication is verified server-side using Clerk's `auth()` helper. No separate Express server needed.
 
 ### Auth (Clerk-managed — no custom auth endpoints needed)
 ```
@@ -530,7 +530,7 @@ Login → Dashboard → My Activity
 
 ### Security
 - **Authentication fully managed by Clerk** — no manual JWT, bcrypt, or session logic
-- Role-based route protection via Clerk `middleware.ts` using `publicMetadata.role`
+- Role-based route protection via Clerk `middleware.js` using `publicMetadata.role`
 - SQL injection prevented via Prisma's parameterized queries
 - File uploads validated (type + size limit: 5MB)
 - Admin API routes verify `role === "admin"` via `auth()` on every request
