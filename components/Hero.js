@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { SignUpButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignUpButton, SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import Link from "next/link";
 
 const Hero = () => {
@@ -44,17 +44,22 @@ const Hero = () => {
         <div className="animate-fade-in-up delay-300 flex flex-col sm:flex-row items-center justify-center gap-4"
              style={{ opacity: 0 }}>
           <SignedOut>
-            <SignUpButton mode="redirect">
+            <SignInButton mode="redirect" forceRedirectUrl="/auth/callback?role=user">
               <button className="group relative px-8 py-3.5 bg-white text-black rounded-full font-medium text-sm hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] transition-all duration-300">
                 Explore Events
                 <span className="inline-block ml-2 transition-transform duration-200 group-hover:translate-x-1">
                   →
                 </span>
+              </button>
+            </SignInButton>
+            <SignUpButton mode="redirect" forceRedirectUrl="/auth/callback?role=admin">
+              <button className="px-8 py-3.5 rounded-full text-sm font-medium border border-[var(--border-light)] text-white hover:bg-[var(--bg-surface)] hover:border-[var(--text-muted)] transition-all duration-300">
+                Post an Opportunity
               </button>
             </SignUpButton>
           </SignedOut>
           <SignedIn>
-            <Link href="/dashboard">
+            <Link href="/events">
               <button className="group relative px-8 py-3.5 bg-white text-black rounded-full font-medium text-sm hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] transition-all duration-300">
                 Explore Events
                 <span className="inline-block ml-2 transition-transform duration-200 group-hover:translate-x-1">
@@ -62,12 +67,12 @@ const Hero = () => {
                 </span>
               </button>
             </Link>
-          </SignedIn>
-          <button className="px-8 py-3.5 rounded-full text-sm font-medium border border-[var(--border-light)] text-white hover:bg-[var(--bg-surface)] hover:border-[var(--text-muted)] transition-all duration-300">
             <Link href="/admin/internships/new">
-              Post an Opportunity
+              <button className="px-8 py-3.5 rounded-full text-sm font-medium border border-[var(--border-light)] text-white hover:bg-[var(--bg-surface)] hover:border-[var(--text-muted)] transition-all duration-300">
+                Post an Opportunity
+              </button>
             </Link>
-          </button>
+          </SignedIn>
         </div>
       </div>
 
