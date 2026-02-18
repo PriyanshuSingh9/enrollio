@@ -3,8 +3,8 @@ import Link from "next/link";
 
 const footerLinks = {
   Platform: [
-    { label: "Events", href: "#events" },
-    { label: "Internships", href: "#internships" },
+    { label: "Events", href: "/events" },
+    { label: "Internships", href: "/internships" },
     { label: "Companies", href: "#" },
     { label: "Pricing", href: "#" },
   ],
@@ -33,7 +33,7 @@ const Footer = () => {
                 e
               </div>
               <span className="text-base font-semibold tracking-tight text-white">
-                enrollio
+                Enroll.io
               </span>
             </Link>
             <p className="text-sm text-[var(--text-muted)] leading-relaxed max-w-xs">
@@ -63,12 +63,12 @@ const Footer = () => {
               <ul className="space-y-2.5">
                 {links.map((link) => (
                   <li key={link.label}>
-                    <a
+                    <Link
                       href={link.href}
                       className="text-sm text-[var(--text-secondary)] hover:text-white transition-colors duration-200"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -79,7 +79,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="mt-16 pt-6 border-t border-[var(--border-subtle)] flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-[var(--text-muted)]">
-            © 2026 enrollio. All rights reserved.
+            © 2026 Enroll.io. All rights reserved.
           </p>
           <p className="text-xs text-[var(--text-muted)]">
             Made with precision & purpose.

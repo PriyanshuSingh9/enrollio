@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -23,7 +24,7 @@ const Hero = () => {
 
         {/* Heading */}
         <h1 className="animate-fade-in-up delay-100 text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight leading-[1.05] mb-6"
-            style={{ opacity: 0 }}>
+          style={{ opacity: 0 }}>
           Where Events
           <br />
           <span className="gradient-text">Meet Opportunities</span>
@@ -31,22 +32,26 @@ const Hero = () => {
 
         {/* Sub-heading */}
         <p className="animate-fade-in-up delay-200 text-lg md:text-xl text-[var(--text-secondary)] max-w-xl mx-auto leading-relaxed mb-10 font-light"
-           style={{ opacity: 0 }}>
+          style={{ opacity: 0 }}>
           Discover curated events, land top internships, and build the network
           that launches your career — all in one beautifully simple platform.
         </p>
 
         {/* CTAs */}
         <div className="animate-fade-in-up delay-300 flex flex-col sm:flex-row items-center justify-center gap-4"
-             style={{ opacity: 0 }}>
+          style={{ opacity: 0 }}>
           <button className="group relative px-8 py-3.5 bg-white text-black rounded-full font-medium text-sm hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] transition-all duration-300">
-            Explore Events
-            <span className="inline-block ml-2 transition-transform duration-200 group-hover:translate-x-1">
-              →
-            </span>
+            <Link href="/events">
+              Explore Events
+              <span className="inline-block ml-2 transition-transform duration-200 group-hover:translate-x-1">
+                →
+              </span>
+            </Link>
           </button>
           <button className="px-8 py-3.5 rounded-full text-sm font-medium border border-[var(--border-light)] text-white hover:bg-[var(--bg-surface)] hover:border-[var(--text-muted)] transition-all duration-300">
-            Post an Opportunity
+            <Link href="/admin/internships/new">
+              Post an Opportunity
+            </Link>
           </button>
         </div>
 
