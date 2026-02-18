@@ -23,7 +23,7 @@ const Hero = () => {
       />
 
       {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
 
         {/* Heading */}
         <h1 className="animate-fade-in-up delay-100 text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight leading-[1.05] mb-6"
@@ -34,7 +34,7 @@ const Hero = () => {
         </h1>
 
         {/* Sub-heading */}
-        <p className="animate-fade-in-up delay-200 text-lg md:text-xl text-[var(--text-secondary)] max-w-xl mx-auto leading-relaxed mb-10 font-light"
+        <p className="animate-fade-in-up delay-200 text-sm md:text-xl text-[var(--text-secondary)] max-w-xl mx-auto leading-relaxed mb-10 font-light"
           style={{ opacity: 0 }}>
           Discover curated events, land top internships, and build the network
           that launches your career — all in one beautifully simple platform.
@@ -69,25 +69,6 @@ const Hero = () => {
             </Link>
           </button>
         </div>
-
-        {/* Stats
-        <div className="animate-fade-in-up delay-500 mt-20 flex items-center justify-center gap-12 md:gap-16"
-             style={{ opacity: 0 }}>
-          {[
-            { value: "10K+", label: "Events hosted" },
-            { value: "50K+", label: "Users joined" },
-            { value: "2K+", label: "Companies" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="text-2xl md:text-3xl font-semibold text-white">
-                {stat.value}
-              </div>
-              <div className="text-xs text-[var(--text-muted)] mt-1 font-mono uppercase tracking-wide">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>*/}
       </div>
 
       {/* Bottom Gradient Fade */}

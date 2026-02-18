@@ -33,19 +33,16 @@ const Navbar = () => {
           : "bg-transparent"
           }`}
       >
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between relative">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-7 h-7 rounded-lg bg-[var(--accent)] flex items-center justify-center text-white font-bold text-sm transition-transform duration-300 group-hover:scale-110">
-              e
-            </div>
-            <span className="text-base font-semibold tracking-tight text-white">
+            <span className="text-2xl font-semibold tracking-tight text-white">
               Enroll.io
             </span>
           </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop Nav — absolute center */}
+          <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
             {links.map((link) => (
               <Link
                 key={link.href}

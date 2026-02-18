@@ -29,10 +29,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 rounded-lg bg-[var(--accent)] flex items-center justify-center text-white font-bold text-sm">
-                e
-              </div>
-              <span className="text-base font-semibold tracking-tight text-white">
+              <span className="text-xl font-semibold tracking-tight text-white">
                 Enroll.io
               </span>
             </Link>
