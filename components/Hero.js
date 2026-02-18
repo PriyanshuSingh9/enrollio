@@ -27,7 +27,7 @@ const Hero = () => {
 
         {/* Heading */}
         <h1 className="animate-fade-in-up delay-100 text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight leading-[1.05] mb-6"
-            style={{ opacity: 0 }}>
+          style={{ opacity: 0 }}>
           Where Events
           <br />
           <span className="gradient-text">Meet Opportunities</span>
@@ -35,7 +35,7 @@ const Hero = () => {
 
         {/* Sub-heading */}
         <p className="animate-fade-in-up delay-200 text-lg md:text-xl text-[var(--text-secondary)] max-w-xl mx-auto leading-relaxed mb-10 font-light"
-           style={{ opacity: 0 }}>
+          style={{ opacity: 0 }}>
           Discover curated events, land top internships, and build the network
           that launches your career — all in one beautifully simple platform.
         </p>
@@ -64,7 +64,9 @@ const Hero = () => {
             </Link>
           </SignedIn>
           <button className="px-8 py-3.5 rounded-full text-sm font-medium border border-[var(--border-light)] text-white hover:bg-[var(--bg-surface)] hover:border-[var(--text-muted)] transition-all duration-300">
-            Post an Opportunity
+            <Link href="/admin/internships/new">
+              Post an Opportunity
+            </Link>
           </button>
         </div>
 
