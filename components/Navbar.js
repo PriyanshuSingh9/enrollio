@@ -2,6 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -54,12 +61,28 @@ const Navbar = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <button className="text-sm text-[var(--text-secondary)] hover:text-white transition-colors duration-200 px-3 py-1.5">
-              Sign In
-            </button>
-            <button className="text-sm bg-white text-black px-4 py-1.5 rounded-full font-medium hover:bg-[var(--text-secondary)] transition-all duration-200">
-              Get Started
-            </button>
+            <SignedOut>
+              <SignInButton mode="redirect">
+                <button className="text-sm text-[var(--text-secondary)] hover:text-white transition-colors duration-200 px-3 py-1.5">
+                  Sign In
+                </button>
+              </SignInButton>
+              <SignUpButton mode="redirect">
+                <button className="text-sm bg-white text-black px-4 py-1.5 rounded-full font-medium hover:bg-[var(--text-secondary)] transition-all duration-200">
+                  Get Started
+                </button>
+              </SignUpButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton
+                afterSignOutUrl="/"
+                appearance={{
+                  elements: {
+                    avatarBox: "w-8 h-8",
+                  },
+                }}
+              />
+            </SignedIn>
           </div>
 
           {/* Mobile Hamburger */}
@@ -102,12 +125,28 @@ const Navbar = () => {
               </a>
             ))}
             <div className="pt-6 border-t border-[var(--border-subtle)] flex flex-col gap-3">
-              <button className="text-base text-[var(--text-secondary)]">
-                Sign In
-              </button>
-              <button className="text-base bg-white text-black px-6 py-3 rounded-full font-medium">
-                Get Started
-              </button>
+              <SignedOut>
+                <SignInButton mode="redirect">
+                  <button className="text-base text-[var(--text-secondary)]">
+                    Sign In
+                  </button>
+                </SignInButton>
+                <SignUpButton mode="redirect">
+                  <button className="text-base bg-white text-black px-6 py-3 rounded-full font-medium">
+                    Get Started
+                  </button>
+                </SignUpButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton
+                  afterSignOutUrl="/"
+                  appearance={{
+                    elements: {
+                      avatarBox: "w-8 h-8",
+                    },
+                  }}
+                />
+              </SignedIn>
             </div>
           </div>
         </div>
