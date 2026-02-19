@@ -3,8 +3,10 @@
 import { createInternship } from "@/app/actions/programs";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function CreateInternship() {
+    const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState("");
     const [showImageInput, setShowImageInput] = useState(false);
@@ -12,10 +14,13 @@ export default function CreateInternship() {
     async function handleSubmit(formData) {
         setIsLoading(true);
         try {
-            await createInternship(formData);
+            const result = await createInternship(formData);
+            if (result && result.id) {
+                router.push(`/internships/${result.id}`);
+            }
         } catch (error) {
             console.error(error);
-            alert("Failed to create internship. Please try again.");
+            alert("Failed to create internship: " + (error.message || "Please try again."));
             setIsLoading(false);
         }
     }

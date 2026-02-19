@@ -53,7 +53,7 @@ export async function createEvent(formData) {
     revalidatePath("/events");
     revalidatePath("/admin");
 
-    redirect(`/events/${newEvent.id}`);
+    return { success: true, id: newEvent.id };
 }
 
 export async function createInternship(formData) {
@@ -108,7 +108,7 @@ export async function createInternship(formData) {
     revalidatePath("/internships");
     revalidatePath("/admin");
 
-    redirect(`/internships/${newInternship.id}`);
+    return { success: true, id: newInternship.id };
 }
 
 export async function getProgramById(id) {

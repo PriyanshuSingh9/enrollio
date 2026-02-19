@@ -6,8 +6,9 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/User/Navbar";
 
 export async function generateMetadata({ params }) {
+    const { id } = await params;
     const event = await db.query.programs.findFirst({
-        where: and(eq(programs.id, parseInt(params.id)), eq(programs.type, "event")),
+        where: and(eq(programs.id, parseInt(id)), eq(programs.type, "event")),
     });
 
     if (!event) return { title: "Event Not Found" };
@@ -19,7 +20,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function EventDetail({ params }) {
-    const eventId = parseInt(params.id);
+    const { id } = await params;
+    const eventId = parseInt(id);
     if (isNaN(eventId)) return notFound();
 
     const event = await db.query.programs.findFirst({

@@ -3,8 +3,10 @@
 import { createEvent } from "@/app/actions/programs";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function CreateEvent() {
+    const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState("");
     const [showImageInput, setShowImageInput] = useState(false);
@@ -12,10 +14,13 @@ export default function CreateEvent() {
     async function handleSubmit(formData) {
         setIsLoading(true);
         try {
-            await createEvent(formData);
+            const result = await createEvent(formData);
+            if (result && result.id) {
+                router.push(`/events/${result.id}`);
+            }
         } catch (error) {
             console.error(error);
-            alert("Failed to create event. Please try again.");
+            alert("Failed to create event: " + (error.message || "Please try again."));
             setIsLoading(false);
         }
     }

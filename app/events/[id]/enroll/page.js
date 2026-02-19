@@ -1,46 +1,98 @@
-import Link from "next/link";
+import { redirect } from "next/navigation";
+import { currentUser } from "@clerk/nextjs/server";
+import { getProgramById } from "@/app/actions/programs";
+import { getUserProfile } from "@/app/actions/user";
+import EnrollmentStepper from "@/components/User/EnrollmentStepper";
 import Navbar from "@/components/User/Navbar";
-import { db } from "@/db";
-import { programs } from "@/schema";
-import { eq, and } from "drizzle-orm";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
-export default async function EnrollPage({ params }) {
+export async function generateMetadata({ params }) {
+    const eventId = parseInt(params.id);
+    if (isNaN(eventId)) return { title: "Event Not Found" };
+
+    const program = await getProgramById(eventId);
+    return {
+        title: program ? `Register — ${program.title} | Enrollio` : "Enroll | Enrollio",
+    };
+}
+
+export default async function EventEnroll({ params }) {
     const eventId = parseInt(params.id);
     if (isNaN(eventId)) return notFound();
 
-    const event = await db.query.programs.findFirst({
-        where: and(eq(programs.id, eventId), eq(programs.type, "event")),
-    });
+    const user = await currentUser();
+    if (!user) return redirect("/sign-in");
 
-    if (!event) return notFound();
+    const [program, userProfile] = await Promise.all([
+        getProgramById(eventId),
+        getUserProfile(),
+    ]);
+
+    if (!program || program.type !== "event") {
+        return redirect("/events");
+    }
 
     return (
         <div className="min-h-screen bg-primary">
             <Navbar />
-            <div className="pt-32 pb-12 px-6">
-                <div className="max-w-3xl mx-auto text-center">
-                    <div className="mb-8">
-                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-surface border border-border-subtle mb-6">
-                            <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+
+            {/* Hero Section */}
+            <div className="relative pt-32 pb-32 px-6 overflow-hidden">
+                {program.coverImage ? (
+                    <>
+                        <div className="absolute inset-0">
+                            <img
+                                src={program.coverImage}
+                                alt={program.title}
+                                className="w-full h-full object-cover opacity-30 blur-md"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-transparent"></div>
                         </div>
-                        <h1 className="text-3xl font-bold text-white mb-2">Register for {event.title}</h1>
-                        <p className="text-muted">Complete the form below to secure your spot.</p>
-                    </div>
+                    </>
+                ) : (
+                    <div className="absolute inset-0 bg-accent/5 -skew-y-2 transform origin-top-left scale-110"></div>
+                )}
 
-                    <div className="p-12 rounded-2xl border border-dashed border-border-subtle bg-surface">
-                        <p className="text-white font-medium mb-4">Application Form Stepper Placeholder</p>
-                        <p className="text-sm text-muted mb-8">
-                            This page will contain the multi-step application form with dynamic fields based on the event configuration.
-                        </p>
+                <div className="max-w-4xl mx-auto relative z-10 text-center">
+                    <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-accent/10 text-accent border border-accent/20 mb-6 shadow-lg shadow-accent/5">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Secure Your Spot
+                    </span>
+                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight drop-shadow-lg">
+                        Register for {program.title}
+                    </h1>
+                    <p className="text-lg text-secondary max-w-2xl mx-auto">
+                        Your profile data has been pre-filled to make this process quick and seamless. Review and complete the steps below.
+                    </p>
+                </div>
+            </div>
 
+            <div className="max-w-4xl mx-auto px-6 -mt-16 relative z-20 pb-24">
+                {/* Stepper Wrapper */}
+                <div className="bg-surface/80 backdrop-blur-xl border border-border-subtle rounded-3xl p-6 md:p-10 shadow-2xl shadow-black/40">
+                    <div className="mb-8">
                         <Link
-                            href={`/events/${eventId}`}
-                            className="text-sm text-accent hover:text-accent-hover font-medium"
+                            href={`/events/${program.id}`}
+                            className="inline-flex items-center gap-2 text-sm text-muted hover:text-white transition-colors group"
                         >
-                            &larr; Back to Event Details
+                            <div className="w-8 h-8 rounded-full bg-surface-hover border border-border-subtle flex items-center justify-center group-hover:border-border-light transition-colors">
+                                <svg className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </div>
+                            Back to Event Details
                         </Link>
                     </div>
+
+                    {/* Stepper Component */}
+                    <EnrollmentStepper
+                        userProfile={userProfile}
+                        program={program}
+                        customFields={program.customFields || []}
+                    />
                 </div>
             </div>
         </div>
