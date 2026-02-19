@@ -239,7 +239,6 @@ Next.js uses file-based routing. All routes live inside `/app/`. Protected route
 | email | VARCHAR(150) UNIQUE | No | Email (synced from Clerk) |
 | role | ENUM('user','admin') DEFAULT 'user' | No | Mirrors Clerk `publicMetadata.role` |
 | profile_photo | VARCHAR(255) | Yes | File path or URL to photo |
-| resume_url | VARCHAR(255) | Yes | File path to uploaded resume |
 | bio | TEXT | Yes | Short bio |
 | created_at | TIMESTAMP | No | Account creation time |
 
@@ -254,10 +253,8 @@ Next.js uses file-based routing. All routes live inside `/app/`. Protected route
 | title | VARCHAR(200) | No | Program title |
 | description | TEXT | No | Full description |
 | category | VARCHAR(100) | Yes | Domain/category tag |
-| banner_url | VARCHAR(255) | Yes | Banner image path |
 | location | VARCHAR(200) | Yes | Location or "Online" |
 | mode | ENUM('online','offline','hybrid') | No | Delivery mode |
-| max_participants | INT | Yes | Cap on enrollment |
 | deadline | DATETIME | No | Application deadline |
 | start_date | DATE | Yes | Program start |
 | end_date | DATE | Yes | Program end |
@@ -290,7 +287,6 @@ Next.js uses file-based routing. All routes live inside `/app/`. Protected route
 | status | ENUM('pending','accepted','rejected','completed') | No | Current status |
 | applied_at | TIMESTAMP | No | Submission time |
 | reviewed_at | TIMESTAMP | Yes | When admin acted |
-| certificate_url | VARCHAR(255) | Yes | Generated cert path |
 | certificate_issued_at | TIMESTAMP | Yes | When cert was made |
 
 ### Table: `application_responses`
@@ -302,15 +298,6 @@ Next.js uses file-based routing. All routes live inside `/app/`. Protected route
 | application_id | INT FOREIGN KEY → applications.id | No | Parent application |
 | custom_field_id | INT FOREIGN KEY → custom_fields.id | No | Question answered |
 | response_value | TEXT | Yes | The answer |
-
-### Table: `notifications`
-| Field | Type | Null? | Description |
-|---|---|---|---|
-| id | INT PRIMARY KEY AUTO_INCREMENT | No | Notification ID |
-| user_id | INT FOREIGN KEY → users.id | No | Recipient |
-| message | TEXT | No | Notification body |
-| is_read | BOOLEAN DEFAULT false | No | Read state |
-| created_at | TIMESTAMP | No | Timestamp |
 
 ---
 
