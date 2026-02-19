@@ -23,8 +23,9 @@ function CallbackContent() {
         });
       }
 
-      // Redirect to homepage (change these when you build /admin and /home)
-      router.push("/");
+      // Redirect based on role
+      const activeRole = role || user.publicMetadata?.role || "user";
+      router.push(activeRole === "admin" ? "/admin" : "/home");
     };
 
     setupAndRedirect();

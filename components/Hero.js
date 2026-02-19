@@ -59,7 +59,7 @@ const Hero = () => {
             </SignUpButton>
           </SignedOut>
           <SignedIn>
-            <Link href="/events">
+            <Link href="/sign-in">
               <button className="group relative px-8 py-3.5 bg-white text-black rounded-full font-medium text-sm hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] transition-all duration-300">
                 Explore Events
                 <span className="inline-block ml-2 transition-transform duration-200 group-hover:translate-x-1">
