@@ -81,3 +81,14 @@ export async function syncUser() {
 
     return newUser;
 }
+
+export async function getUserProfile() {
+    const user = await currentUser();
+    if (!user) return null;
+
+    const dbUser = await db.query.users.findFirst({
+        where: eq(users.clerkId, user.id),
+    });
+
+    return dbUser || null;
+}

@@ -1,8 +1,8 @@
 "use server";
 
 import { db } from "@/db";
-import { programs, users } from "@/schema";
-import { eq } from "drizzle-orm";
+import { programs, users, customFields, applications, applicationResponses } from "@/schema";
+import { eq, and } from "drizzle-orm";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -54,4 +54,65 @@ export async function createEvent(formData) {
     revalidatePath("/admin");
 
     redirect(`/events/${newEvent.id}`);
+}
+
+export async function getProgramById(id) {
+    const program = await db.query.programs.findFirst({
+        where: eq(programs.id, parseInt(id)),
+        with: {
+            customFields: true,
+        },
+    });
+    return program || null;
+}
+
+export async function submitApplication({ programId, responses }) {
+    const user = await currentUser();
+    if (!user) return { success: false, message: "You must be signed in to apply." };
+
+    const dbUser = await db.query.users.findFirst({
+        where: eq(users.clerkId, user.id),
+    });
+
+    if (!dbUser) return { success: false, message: "User not found." };
+
+    // Check for duplicate application
+    const existing = await db.query.applications.findFirst({
+        where: and(
+            eq(applications.userId, dbUser.id),
+            eq(applications.programId, programId)
+        ),
+    });
+
+    if (existing) {
+        return { success: false, message: "You have already applied to this program." };
+    }
+
+    try {
+        const [application] = await db.insert(applications).values({
+            userId: dbUser.id,
+            programId,
+            status: "pending",
+        }).returning();
+
+        // Insert custom field responses
+        if (responses && responses.length > 0) {
+            for (const resp of responses) {
+                if (resp.value && resp.value.trim() !== "") {
+                    await db.insert(applicationResponses).values({
+                        applicationId: application.id,
+                        customFieldId: resp.fieldId,
+                        responseValue: resp.value,
+                    });
+                }
+            }
+        }
+
+        revalidatePath("/dashboard");
+        revalidatePath(`/internships/${programId}`);
+        return { success: true, message: "Application submitted successfully!" };
+    } catch (error) {
+        console.error("Error submitting application:", error);
+        return { success: false, message: "Failed to submit application." };
+    }
 }
