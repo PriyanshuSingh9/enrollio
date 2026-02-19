@@ -56,6 +56,61 @@ export async function createEvent(formData) {
     redirect(`/events/${newEvent.id}`);
 }
 
+export async function createInternship(formData) {
+    const user = await currentUser();
+    if (!user) throw new Error("Unauthorized");
+
+    // Get DB user to link as admin
+    const dbUser = await db.query.users.findFirst({
+        where: eq(users.clerkId, user.id),
+    });
+
+    if (!dbUser || dbUser.role !== 'admin') {
+        throw new Error("Unauthorized: Only admins can create internships");
+    }
+
+    const title = formData.get("title");
+    const description = formData.get("description");
+    const category = formData.get("category");
+    const mode = formData.get("mode");
+    const location = formData.get("location");
+    const startDate = formData.get("startDate");
+    const endDate = formData.get("endDate");
+    const deadline = formData.get("deadline");
+    const coverImage = formData.get("coverImage");
+    const stipend = formData.get("stipend");
+    const duration = formData.get("duration");
+    const requiredSkills = formData.get("requiredSkills");
+
+    // Basic validation
+    if (!title || !description || !mode || !deadline || !stipend || !duration || !requiredSkills) {
+        throw new Error("Missing required fields");
+    }
+
+    const [newInternship] = await db.insert(programs).values({
+        adminId: dbUser.id,
+        type: 'internship',
+        title,
+        description,
+        category,
+        mode,
+        location,
+        startDate: startDate ? new Date(startDate) : null,
+        endDate: endDate ? new Date(endDate) : null,
+        deadline: new Date(deadline),
+        coverImage,
+        stipend,
+        duration,
+        requiredSkills,
+        isActive: true,
+    }).returning();
+
+    revalidatePath("/internships");
+    revalidatePath("/admin");
+
+    redirect(`/internships/${newInternship.id}`);
+}
+
 export async function getProgramById(id) {
     const program = await db.query.programs.findFirst({
         where: eq(programs.id, parseInt(id)),
