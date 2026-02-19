@@ -3,27 +3,19 @@
 import { createEvent } from "@/app/actions/programs";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 export default function CreateEvent() {
     const [isLoading, setIsLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState("");
     const [showImageInput, setShowImageInput] = useState(false);
-    const router = useRouter();
 
     async function handleSubmit(formData) {
         setIsLoading(true);
         try {
-            const result = await createEvent(formData);
-            if (result.success) {
-                router.push(`/events/${result.eventId}`);
-            } else {
-                alert(result.error || "Failed to create event. Please try again.");
-                setIsLoading(false);
-            }
+            await createEvent(formData);
         } catch (error) {
             console.error(error);
-            alert("An unexpected error occurred.");
+            alert("Failed to create event. Please try again.");
             setIsLoading(false);
         }
     }

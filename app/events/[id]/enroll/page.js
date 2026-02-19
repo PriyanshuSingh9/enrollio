@@ -6,8 +6,7 @@ import { eq, and } from "drizzle-orm";
 import { notFound } from "next/navigation";
 
 export default async function EnrollPage({ params }) {
-    const { id } = await params;
-    const eventId = parseInt(id);
+    const eventId = parseInt(params.id);
     if (isNaN(eventId)) return notFound();
 
     const event = await db.query.programs.findFirst({
