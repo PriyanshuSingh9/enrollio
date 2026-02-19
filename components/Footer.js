@@ -29,8 +29,11 @@ const Footer = () => {
           {/* Brand */}
           <div className="col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-4">
+              <div className="relative w-6 h-6">
+                <img src="/logo.png" alt="Enrollio Logo" className="w-full h-full object-contain" />
+              </div>
               <span className="text-xl font-semibold tracking-tight text-white">
-                Enroll.io
+                Enrollio
               </span>
             </Link>
             <p className="text-sm text-[var(--text-muted)] leading-relaxed max-w-xs">

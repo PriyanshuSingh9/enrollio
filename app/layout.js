@@ -14,9 +14,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "enrollio — Where Events Meet Opportunities",
-  description:
-    "Discover and host events, find internships, and unlock opportunities. The modern platform for events and career growth.",
+  title: "Enrollio | Discover Events & Internships",
+  description: "The ultimate platform for students and professionals to discover hackathons, workshops, and internships. Boost your career with Enrollio.",
+  keywords: ["events", "internships", "hackathons", "workshops", "career", "enrollio", "student opportunities"],
+  openGraph: {
+    title: "Enrollio | Discover Events & Internships",
+    description: "Join Enrollio to find the best events and internships tailored for your career growth.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }) {

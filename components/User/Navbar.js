@@ -38,8 +38,11 @@ const Navbar = () => {
                 <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between relative">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2 group">
+                        <div className="relative w-8 h-8">
+                            <img src="/logo.png" alt="Enrollio Logo" className="w-full h-full object-contain" />
+                        </div>
                         <span className="text-2xl font-semibold tracking-tight text-white">
-                            Enroll.io
+                            Enrollio
                         </span>
                     </Link>
 
