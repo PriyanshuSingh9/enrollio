@@ -7,14 +7,23 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
 export async function updateProfile(formData) {
-    const user = await currentUser();
-    if (!user) {
+    const { userId } = await auth();
+    if (!userId) {
         throw new Error("Unauthorized");
     }
 
     const name = formData.get("name");
     const bio = formData.get("bio");
-    const resumeUrl = formData.get("resumeUrl");
+    const gender = formData.get("gender");
+    const userType = formData.get("userType");
+    const domain = formData.get("domain");
+    const course = formData.get("course");
+    const specialization = formData.get("specialization");
+    const courseStartYear = formData.get("courseStartYear");
+    const courseEndYear = formData.get("courseEndYear");
+    const organization = formData.get("organization");
+    const purpose = formData.get("purpose");
+    const location = formData.get("location");
 
     // Basic validation
     if (!name || name.trim().length === 0) {
@@ -26,9 +35,18 @@ export async function updateProfile(formData) {
             .set({
                 name,
                 bio,
-                // resumeUrl: resumeUrl // Schema doesn't have resumeUrl anymore based on recent changes, check PRD
+                gender,
+                userType,
+                domain,
+                course,
+                specialization,
+                courseStartYear: courseStartYear ? parseInt(courseStartYear) : null,
+                courseEndYear: courseEndYear ? parseInt(courseEndYear) : null,
+                organization,
+                purpose,
+                location,
             })
-            .where(eq(users.clerkId, user.id));
+            .where(eq(users.clerkId, userId));
 
         revalidatePath("/dashboard/profile");
         return { success: true, message: "Profile updated successfully" };

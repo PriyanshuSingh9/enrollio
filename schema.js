@@ -17,6 +17,17 @@ export const users = pgTable('users', {
     role: roleEnum('role').default('user').notNull(),
     profilePhoto: varchar('profile_photo', { length: 255 }),
     bio: text('bio'),
+    // New Profile Fields
+    gender: varchar('gender', { length: 50 }),
+    userType: varchar('user_type', { length: 50 }),
+    domain: varchar('domain', { length: 100 }),
+    course: varchar('course', { length: 200 }),
+    specialization: varchar('specialization', { length: 200 }),
+    courseStartYear: integer('course_start_year'),
+    courseEndYear: integer('course_end_year'),
+    organization: varchar('organization', { length: 200 }),
+    purpose: text('purpose'),
+    location: varchar('location', { length: 200 }),
     createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
