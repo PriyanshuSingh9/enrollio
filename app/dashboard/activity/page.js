@@ -1,14 +1,19 @@
 import Link from "next/link";
 import { db } from "@/db";
-import { applications, programs } from "@/schema";
+import { applications, programs, users } from "@/schema";
 import { eq, desc } from "drizzle-orm";
-import { getDbUser } from "@/lib/userUtils";
+import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 export default async function MyActivity() {
-    const dbUser = await getDbUser();
+    const user = await currentUser();
+    if (!user) return redirect("/sign-in");
 
-    if (!dbUser) return redirect("/sign-in");
+    const dbUser = await db.query.users.findFirst({
+        where: eq(users.clerkId, user.id),
+    });
+
+    if (!dbUser) return <div>Loading...</div>;
 
     // Fetch applications with program details
     const userApplications = await db

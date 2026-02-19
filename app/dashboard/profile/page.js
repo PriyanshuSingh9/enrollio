@@ -1,12 +1,20 @@
-import { getDbUser } from "@/lib/userUtils";
-import { updateProfile } from "@/app/actions/user";
+import { db } from "@/db";
+import { users } from "@/schema";
+import { eq } from "drizzle-orm";
+import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { updateProfile } from "@/app/actions/user";
 
 export default async function ProfileSettings() {
-    const dbUser = await getDbUser();
+    const user = await currentUser();
+    if (!user) return redirect("/sign-in");
+
+    const dbUser = await db.query.users.findFirst({
+        where: eq(users.clerkId, user.id),
+    });
 
     if (!dbUser) {
-        return redirect("/sign-in");
+        return redirect("/sign-in"); // Or appropriate error handling
     }
 
     return (

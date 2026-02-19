@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
+import { UserButton } from "@clerk/nextjs";
 
 export default function AdminDashboard() {
   const { user } = useUser();
@@ -73,7 +74,18 @@ export default function AdminDashboard() {
               Here&apos;s your organizer overview
             </p>
           </div>
-
+          <div>
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: "w-12 h-12"
+                },
+                variables: {
+                  avatarSize: "48px"
+                }
+              }}
+            />
+          </div>
 
         </div>
 

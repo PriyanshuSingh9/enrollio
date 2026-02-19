@@ -1,15 +1,24 @@
 import Link from "next/link";
 import { db } from "@/db";
-import { applications, programs } from "@/schema";
+import { applications, programs, users } from "@/schema";
 import { eq, desc, count, and } from "drizzle-orm";
-import { getDbUser } from "@/lib/userUtils";
+import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
-    const dbUser = await getDbUser();
+    const user = await currentUser();
+
+    if (!user) {
+        return redirect("/sign-in");
+    }
+
+    // Get user from DB to have the ID
+    const dbUser = await db.query.users.findFirst({
+        where: eq(users.clerkId, user.id),
+    });
 
     if (!dbUser) {
-        return redirect("/sign-in");
+        return <div>Loading user data...</div>;
     }
 
     // Parallelize queries for better performance
