@@ -3,6 +3,7 @@ import Link from "next/link";
 import { db } from "@/db";
 import { programs, users } from "@/schema";
 import { eq, desc, and } from "drizzle-orm";
+import { syncUser } from "@/app/actions/user";
 
 // Helper to get consistent gradient based on ID (deterministic)
 const getGradient = (id) => {
@@ -18,6 +19,8 @@ const getGradient = (id) => {
 };
 
 export default async function HomePage() {
+    await syncUser(); // Sync user on visit
+
     // Fetch Events (latest 6)
     const events = await db.select({
         id: programs.id,
