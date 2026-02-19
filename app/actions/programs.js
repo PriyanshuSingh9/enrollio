@@ -35,23 +35,85 @@ export async function createEvent(formData) {
         throw new Error("Missing required fields");
     }
 
-    const [newEvent] = await db.insert(programs).values({
-        adminId: dbUser.id,
-        type: 'event',
-        title,
-        description,
-        category,
-        mode,
-        location,
-        startDate: startDate ? new Date(startDate) : null,
-        endDate: endDate ? new Date(endDate) : null,
-        deadline: new Date(deadline),
-        coverImage,
-        isActive: true,
-    }).returning();
+    try {
+        const [newEvent] = await db.insert(programs).values({
+            adminId: dbUser.id,
+            type: 'event',
+            title,
+            description,
+            category,
+            mode,
+            location,
+            startDate: startDate ? new Date(startDate) : null,
+            endDate: endDate ? new Date(endDate) : null,
+            deadline: new Date(deadline),
+            coverImage,
+            isActive: true,
+        }).returning();
 
-    revalidatePath("/events");
-    revalidatePath("/admin");
+        revalidatePath("/events");
+        revalidatePath("/admin");
 
-    redirect(`/events/${newEvent.id}`);
+        return { success: true, eventId: newEvent.id };
+    } catch (error) {
+        console.error("Error creating event:", error);
+        return { success: false, error: "Failed to create event" };
+    }
 }
+
+export async function createInternship(formData) {
+    const user = await currentUser();
+    if (!user) throw new Error("Unauthorized");
+
+    // Get DB user to link as admin
+    const dbUser = await db.query.users.findFirst({
+        where: eq(users.clerkId, user.id),
+    });
+
+    if (!dbUser || dbUser.role !== 'admin') {
+        throw new Error("Unauthorized: Only admins can create internships");
+    }
+
+    const title = formData.get("title");
+    const description = formData.get("description");
+    const category = formData.get("category");
+    const mode = formData.get("mode");
+    const location = formData.get("location");
+    const stipend = formData.get("stipend");
+    const duration = formData.get("duration");
+    const requiredSkills = formData.get("requiredSkills");
+    const deadline = formData.get("deadline");
+    const coverImage = formData.get("coverImage");
+
+    // Basic validation
+    if (!title || !description || !mode || !deadline) {
+        throw new Error("Missing required fields");
+    }
+
+    try {
+        const [newInternship] = await db.insert(programs).values({
+            adminId: dbUser.id,
+            type: 'internship',
+            title,
+            description,
+            category,
+            mode,
+            location,
+            stipend,
+            duration,
+            requiredSkills,
+            deadline: new Date(deadline),
+            coverImage,
+            isActive: true,
+        }).returning();
+
+        revalidatePath("/internships");
+        revalidatePath("/admin");
+
+        return { success: true, internshipId: newInternship.id };
+    } catch (error) {
+        console.error("Error creating internship:", error);
+        return { success: false, error: "Failed to create internship" };
+    }
+}
+

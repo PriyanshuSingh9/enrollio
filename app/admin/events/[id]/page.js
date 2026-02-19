@@ -1,9 +1,10 @@
-export default function ManageEvent({ params }) {
+export default async function ManageEvent({ params }) {
+    const { id } = await params;
     return (
         <div className="min-h-screen p-8 pt-24">
             <div className="max-w-6xl mx-auto">
                 <h1 className="text-3xl font-bold text-white mb-2">Manage Event</h1>
-                <p className="text-[var(--text-muted)] mb-8">Event ID: {params.id}</p>
+                <p className="text-[var(--text-muted)] mb-8">Event ID: {id}</p>
                 <div className="grid md:grid-cols-2 gap-6">
                     <div className="p-6 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]">
                         <h2 className="text-lg font-semibold text-white mb-2">Event Details</h2>
