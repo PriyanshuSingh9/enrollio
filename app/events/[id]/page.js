@@ -37,7 +37,21 @@ export default async function EventDetail({ params }) {
 
             {/* Hero Section */}
             <div className="relative pt-32 pb-20 px-6 overflow-hidden">
-                <div className="absolute inset-0 bg-accent/5 -skew-y-2 transform origin-top-left scale-110"></div>
+                {event.coverImage ? (
+                    <>
+                        <div className="absolute inset-0">
+                            <img
+                                src={event.coverImage}
+                                alt={event.title}
+                                className="w-full h-full object-cover opacity-40 blur-sm"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-[#111]/80 to-transparent"></div>
+                        </div>
+                    </>
+                ) : (
+                    <div className="absolute inset-0 bg-accent/5 -skew-y-2 transform origin-top-left scale-110"></div>
+                )}
+
                 <div className="max-w-7xl mx-auto relative z-10">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent border border-accent/20 text-sm font-medium mb-6">
                         <span className="relative flex h-2 w-2">

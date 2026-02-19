@@ -36,6 +36,7 @@ export const programs = pgTable('programs', {
     stipend: varchar('stipend', { length: 100 }), // Internships only
     duration: varchar('duration', { length: 100 }), // Internships only
     requiredSkills: text('required_skills'), // Internships only
+    coverImage: varchar('cover_image', { length: 500 }),
     isActive: boolean('is_active').default(true).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
 });
