@@ -1,14 +1,24 @@
 # Enrollio
 
+> **Submission for LogicRush Hackathon**  
+> **Topic 9**: Event & Internship Pipeline  
+> **Team**: Code Red  
+> **Members**: Rudra Agarwal (Team Lead), Priyanshu Singh, Arpit Gupta, Deepanshu Khatri
+>
+> **The Problem**: High administrative burden for organizing programs.  
+> **Proposed Solution**: End-to-end management with auto-generated certificates.  
+> **UI/UX Compulsory Element**: Enrollment Stepper.  
+> **Design Goal**: Multi-step form reducing form fatigue.
+
 Enrollio is a comprehensive platform designed to streamline the management and discovery of events and internships. Built with modern web technologies, it offers a seamless experience for both administrators and users.
 
 ## Features
 
 -   **Event Management**: Create and manage events with detailed information, including mode (online/offline), location, and dates.
 -   **Internship Portal**: Post and apply for internships with specific requirements like stipend, duration, and skills.
--   **Admin Dashboard**: comprehensive dashboard for managing all programs.
--   **User Authentication**: Secure authentication powered by Clerk.
--   **Responsive Design**: A beautiful, dark-themed UI that works across devices.
+-   **Admin Dashboard**: Manage all your programs and track applicants in real-time with Neon DB integration.
+-   **User Authentication**: Secure authentication and role-mapping powered by Clerk.
+-   **Modern Aesthetics**: Features a sleek, Luma-style dark UI with glassmorphism, dynamic gradients, and full-bleed cover images.
 
 ## Tech Stack
 

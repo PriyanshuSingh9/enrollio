@@ -51,7 +51,7 @@ One platform. Full pipeline. Zero manual grunt work. When a participant complete
 ### Frontend
 | Technology | Purpose |
 |---|---|
-| **Next.js 14 (App Router)** | Full-stack React framework — handles routing, SSR, SSG, and API routes in one project |
+| **Next.js 15 (App Router)** | Full-stack React framework — handles routing, SSR, SSG, and API routes in one project |
 | **Tailwind CSS** | Utility-first styling, fast and consistent |
 | **React Hook Form** | Form state management for the Enrollment Stepper |
 | **jsPDF / html2canvas** | Client-side certificate PDF generation |
@@ -74,7 +74,7 @@ Clerk replaces all manual auth logic. No JWT handling, no bcrypt, no session man
 | Technology | Purpose |
 |---|---|
 | **Next.js API Routes** (`/app/api/`) | Serverless API handlers — replaces Express entirely |
-| **Prisma ORM** | Type-safe SQL database modeling and querying |
+| **Drizzle ORM** | Type-safe SQL database modeling and querying |
 | **Multer / Next.js FormData** | File upload handling (resume, profile photo) |
 | **Nodemailer** | Email notifications for status updates |
 | **PDFKit** | Server-side certificate generation |
@@ -84,8 +84,8 @@ Clerk replaces all manual auth logic. No JWT handling, no bcrypt, no session man
 ### Database
 | Technology | Purpose |
 |---|---|
-| **MySQL / PostgreSQL** | Primary relational database |
-| **Prisma Migrations** | Version-controlled, type-safe schema changes |
+| **Neon Serverless (PostgreSQL)** | Primary relational database |
+| **Drizzle Kit** | Version-controlled, type-safe schema changes and migrations |
 
 ### DevOps / Tools
 | Technology | Purpose |
@@ -521,7 +521,7 @@ Login → Dashboard → My Activity
 ### Security
 - **Authentication fully managed by Clerk** — no manual JWT, bcrypt, or session logic
 - Role-based route protection via Clerk `middleware.js` using `publicMetadata.role`
-- SQL injection prevented via Prisma's parameterized queries
+- SQL injection prevented via Drizzle's parameterized queries
 - File uploads validated (type + size limit: 5MB)
 - Admin API routes verify `role === "admin"` via `auth()` on every request
 - Clerk webhook endpoint verified using Svix signature headers
@@ -540,4 +540,4 @@ Login → Dashboard → My Activity
 
 ---
 
-*Enrollio — Built for Hackathon Topic 9 | Code Red & ThinkSync | v1.2 — Stack: Next.js + Clerk + Prisma + MySQL*
+*Enrollio — Built for Hackathon Topic 9 | Code Red & ThinkSync | v1.2 — Stack: Next.js 15 + Clerk + Drizzle + Neon (PostgreSQL)*
