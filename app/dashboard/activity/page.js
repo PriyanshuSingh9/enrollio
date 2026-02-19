@@ -4,7 +4,6 @@ import { applications, programs } from "@/schema";
 import { eq, desc } from "drizzle-orm";
 import { getDbUser } from "@/lib/userUtils";
 import { redirect } from "next/navigation";
-import { FileText, ExternalLink } from "lucide-react";
 
 export default async function MyActivity() {
     const dbUser = await getDbUser();
